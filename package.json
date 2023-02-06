@@ -11,8 +11,8 @@
   "devDependencies": {
     "@types/node": "18.11.19",
     "aws-cdk": "2.63.2",
-    "aws-cdk-lib": "2.63.2",
-    "constructs": "^10.0.0",
+    "aws-cdk-lib": "^2.63.2",
+    "constructs": "^10.1.241",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.5",
     "esbuild-register": "^3.4.2",
