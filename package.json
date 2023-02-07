@@ -21,6 +21,10 @@
     "vitest": "^0.28.4"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.266.0",
+    "@aws-sdk/lib-dynamodb": "^3.266.0",
+    "@aws-sdk/smithy-client": "^3.266.0",
+    "@aws-sdk/types": "^3.266.0",
     "cheerio": "1.0.0-rc.12",
     "got": "^12.5.3",
     "remeda": "^1.6.1"

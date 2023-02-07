@@ -1,20 +1,42 @@
 // import * as R from "remeda";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import got from "got";
 import * as cheerio from "cheerio";
 
 const ORIGIN = "https://ks.its-kenpo.or.jp";
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL!;
+const TABLE_NAME = process.env.TABLE_NAME!;
+
+const doc = DynamoDBDocument.from(new DynamoDBClient({}));
 
 export const handler = async () => {
   const statusText = await getStatusText();
 
   console.info(statusText);
 
+  const { Item: item } = await doc.get({
+    TableName: TABLE_NAME,
+    Key: { pk: "latestStatus" },
+  });
+  const latestStatus: string | null = item?.val ?? null;
+
+  console.info({ item });
+
   if (statusText === "現在のところ空きがありません。") {
     return;
   }
+  if (statusText === latestStatus) {
+    return;
+  }
 
-  await got.post(SLACK_WEBHOOK_URL, { json: { text: statusText } });
+  await Promise.all([
+    got.post(SLACK_WEBHOOK_URL, { json: { text: statusText } }),
+    doc.put({
+      TableName: TABLE_NAME,
+      Item: { pk: "latestStatus", val: statusText },
+    }),
+  ]);
 };
 
 export async function getStatusText() {
