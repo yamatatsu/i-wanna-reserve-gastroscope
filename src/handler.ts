@@ -23,9 +23,6 @@ export const handler = async () => {
 
   console.info({ item });
 
-  if (statusText === "現在のところ空きがありません。") {
-    return;
-  }
   if (statusText === latestStatus) {
     return;
   }
