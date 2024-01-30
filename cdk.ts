@@ -28,6 +28,7 @@ class Stack extends cdk.Stack {
       functionName: "i-wanna-reserve-gastroscope",
       entry: "src/handler.ts",
       runtime: lambda.Runtime.NODEJS_18_X,
+      timeout: cdk.Duration.seconds(10),
       environment: { SLACK_WEBHOOK_URL, TABLE_NAME: table.tableName },
     });
     table.grantReadWriteData(handler);

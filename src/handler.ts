@@ -37,7 +37,7 @@ export const handler = async () => {
 };
 
 export async function getStatusText() {
-  const $top = await load(ORIGIN + "/");
+  const $top = await load(ORIGIN + "/home/index");
   const availabilityPagePath = $top(
     'a:contains("現在の空き状況俯瞰表（2023年度）")'
   ).prop("href");
